@@ -1,26 +1,27 @@
 <%- include("partials/header.ejs") %>
 
+
 <div class="container mt-5">
-  <h1 class="mb-4 text-center">BLOGS</h1>
+  <h1 class="mb-4 text-center">DETAILS</h1>
   <div class="row">
-    <% posts.forEach(post => { %>
-    <div class="col-md-8 col-lg-6 mb-4">
+    <div class="mb-4">
       <div class="card">
         <div class="card-header bg-dark text-white"><%= post.title %></div>
         <div class="card-body">
           <blockquote class="blockquote mb-0">
-            <p><%= post.text.length > 50 ? post.text.substring(0,100) + '...' : post.text %></p>
+            <p><%= post.text %></p>
             <p> by <%= post.author %></p>
           </blockquote>
           <div style="float: right">
-            <a href="/details/<%= post.id %>" class="card-link">Details</a>
+            <a href="/edit-post/<%= post.id %>" class="card-link">Edit</a>
+            <a href="/delete-post" class="card-link">Delete</a>
           </div>
         </div>
       </div>
     </div>
-
-    <% }); %>
   </div>
 </div>
+
+
 
 <%- include("partials/footer.ejs") %>
