@@ -56,11 +56,42 @@ app.get("/edit-post/:id", (req,res) => {
     res.render("edit-post.ejs", { post: blogPost});
 });
 
-app.get("/delete-post", (req,res) => {
-    res.render("delete-post.ejs")
+app.post("/edit-post/:id", (req,res) => {
+    const postId = req.params.id;
+    const updatedTitle = req.body.title;
+    const updatedText = req.body.text;
+    const updatedAuthor = req.body.author;
+
+    const postIndex = posts.findIndex(post => post.id == postId);
+
+    if (postIndex !== -1) {
+        posts[postIndex].title = updatedTitle;
+        posts[postIndex].text = updatedText;
+        posts[postIndex].author = updatedAuthor;
+
+        res.redirect(`/details/${postId}`);
+    }
+    else{
+        res.status(404).render("404.ejs");
+    }
+
 });
 
+app.post("/delete-post/:id", (req,res) => {
+    const postId = req.params.id;
 
+    const postIndex =  posts.findIndex(post => post.id == postId);
+
+    if(postIndex !== -1)  {
+        posts.splice(postIndex,1);
+
+        res.redirect("/");
+    }
+    else {
+        res.render("delete-post.ejs")
+
+    }
+})
 
 app.use((req, res) => {
     res.status(404).render("404.ejs");
